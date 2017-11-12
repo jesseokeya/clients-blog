@@ -201,19 +201,20 @@ header.masthead .page-heading, header.masthead .post-heading, header.masthead .s
 
 @media only screen and (min-width: 321px) and (max-width: 736px) {
   header.contain-img {
-    -webkit-background-size: 100vw 55vh;
-    -moz-background-size: 100vw 55vh;
-    -o-background-size: 100vw 55vh;
-    background-size: 100vw 55vh;
+    -webkit-background-size: 130% 55vh;
+    -moz-background-size: 130% 55vh;
+    -o-background-size: 130% 55vh;
+    background-size: 130% 55vh;
+    background-color: white;
   }
 }
 
 @media only screen and (min-width: 0px) and (max-width: 320px) {
   header.contain-img {
-    -webkit-background-size: 100vw 65vh;
-    -moz-background-size: 100vw 65vh;
-    -o-background-size: 100vw 65vh;
-    background-size: 160vw 65vh;
+    -webkit-background-size: 130% 66vh;
+    -moz-background-size: 130% 66vh;
+    -o-background-size: 130% 66vh;
+    background-size: 130% 66vh;
     background-color: white;
   }
 }
