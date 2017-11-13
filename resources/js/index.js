@@ -59,7 +59,15 @@ let handleAdmin = () => {
     window.location.href = '/admin/publish'
   }
   const checkAdminAgain = window.location.pathname === '/admin/publish';
-  if(checkAdminAgain && !checkCookies){
+  if (checkAdminAgain && !checkCookies) {
     window.location.href = '/admin'
   }
+  (checkCookies)
+    ? $('#signOut').show()
+    : $('#signOut').hide();
+}
+
+let handleSignOut = () => {
+  Cookies.remove('isAdmin');
+  window.location.reload();
 }
