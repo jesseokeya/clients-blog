@@ -4,9 +4,27 @@ const {getAllPosts} = require('./helper');
 const mongoose = require('mongoose');
 const contactSchema = require('../models/contact');
 const contact = mongoose.model('contact');
+const {credentials} = require('../config')
 
 router.post('/create', (req, res) => {
   res.send()
+});
+
+router.post('/admin', (req, res) => {
+  const response = {};
+  const isValidEmail = (credentials.email === req.body.email);
+  const isValidPassword = (credentials.password === req.body.password);
+  if (isValidEmail && isValidPassword) {
+    response.status = 200;
+    response.isValidUser = true;
+    response.message = 'valid'
+  } else {
+    response.status = 404;
+    response.isValidUser = false;
+    response.message = 'invalid'
+  }
+
+  res.send(response);
 });
 
 router.post('/contact', (req, res) => {
@@ -19,8 +37,7 @@ router.post('/contact', (req, res) => {
       res.send({
         data: req.body,
         status: 200,
-        message: 'contact successfully saved'
-      });
+        message: 'contact successfully saved'});
     }
   });
 });

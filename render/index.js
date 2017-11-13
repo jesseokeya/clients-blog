@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { home } = require('../config');
-const { getAllPosts } = require('../api');
-const { getPostByIndex } = require('../api/helper');
+const {home} = require('../config');
+const {getAllPosts} = require('../api');
+const {getPostByIndex} = require('../api/helper');
 
 router.get(home, (req, res) => {
   res.render('pages/home', getAllPosts[0]);
@@ -15,6 +15,10 @@ router.get('/about', (req, res) => {
 
 router.get('/admin', (req, res) => {
   res.render('pages/login');
+});
+
+router.get('/admin/publish', (req, res) => {
+  res.render('pages/admin');
 });
 
 router.get('/contact', (req, res) => {
