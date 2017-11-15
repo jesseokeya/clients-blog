@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {getAllPosts} = require('./helper');
 const mongoose = require('mongoose');
-const contactSchema = require('../models/contact');
-const contact = mongoose.model('contact');
-const {credentials} = require('../config')
+const {credentials} = require('../config');
+
+/* Post Resquests */
 
 router.post('/create', (req, res) => {
   console.log(req.body);
@@ -29,17 +29,52 @@ router.post('/admin', (req, res) => {
 });
 
 router.post('/contact', (req, res) => {
-  console.log(req.body);
+  const contactSchema = require('../models/contact');
+  const contact = mongoose.model('contact');
   const newContact = new contact(req.body);
-  newContact.save(function(err) {
+  newContact.save((err) => {
     if (err) {
       console.log(err);
     } else {
-      res.send({
-        data: req.body,
-        status: 200,
-        message: 'contact successfully saved'});
+      res.send({data: req.body, status: 200, message: 'contact successfully saved'});
     }
+  });
+});
+
+router.post('/update/about', (req, res) => {
+  const aboutSchema = require('../models/about');
+  const about = mongoose.model('about');
+  console.log(req.body);
+  about.remove({}, (err, docs) => {
+    if (err) {
+      throw err;
+    }
+  });
+  const newAbout = new about({description: req.body.data});
+  newAbout.save((err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({data: req.body, status: 200, message: 'contact successfully saved'});
+
+    }
+  });
+});
+
+
+/* Get Resquests */
+router.get('/get/about', (req, res) => {
+  const aboutSchema = require('../models/about');
+  const about = mongoose.model('about');
+  about.find({}, (err, docs) => {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      status: 200,
+      data: docs,
+      message: 'Blog About Me Data'
+    });
   });
 });
 

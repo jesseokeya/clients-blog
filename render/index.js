@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const path = require('path');
 const {home} = require('../config');
@@ -10,7 +11,15 @@ router.get(home, (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-  res.render('pages/about');
+  const aboutSchema = require('../models/about');
+  const about = mongoose.model('about');
+  about.find({}, function(err, results) {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.render('pages/about', {result: results});
+  });
 });
 
 router.get('/login', (req, res) => {

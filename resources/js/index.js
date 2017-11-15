@@ -5,6 +5,7 @@ $(document).ready(() => {
     ? $('#adminEdit').remove()
     : ''
   handleAdmin();
+  preload();
   socket.on('success', function(data) {
     console.log(data.message);
   });
@@ -56,6 +57,10 @@ const validateEmail = (mail) => {
   return false;
 }
 
+const preload = () => {
+  
+}
+
 const handleAdmin = () => {
   const checkAdmin = window.location.pathname === '/login';
   const checkCookies = isUserAdmin();
@@ -67,7 +72,11 @@ const handleAdmin = () => {
     window.location.href = '/login'
   }
   (checkCookies)
-    ? $('li#signOut').append(signOutButton())
+    ? $('#signOut').append(signOutButton())
+    : '';
+
+  (checkCookies)
+    ? $('#editButton').append(editButton)
     : '';
 }
 
@@ -91,4 +100,8 @@ const showWarninMessage = (heading, body) => {
 const signOutButton = () => {
   return `<a onclick="handleSignOut()" class="nav-link btn btn-warning btn-sm">
  sign out </a>`;
+}
+
+const editButton = () => {
+  return `<button id="adminEdit" type="button" class="btn btn-warning text-white">Edit</button>`
 }

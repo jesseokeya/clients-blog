@@ -8,4 +8,4 @@ const aboutSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model('contact', aboutSchema);
+module.exports = mongoose.model('about', aboutSchema);

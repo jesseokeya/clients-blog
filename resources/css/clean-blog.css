@@ -41,6 +41,10 @@ blockquote {
   margin-top: 60px;
 }
 
+.space-top {
+  margin-top: 10%;
+}
+
 .contain-button {
   margin-left: 6%;
   margin-right: 6%;
