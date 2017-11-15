@@ -7,7 +7,8 @@ const contact = mongoose.model('contact');
 const {credentials} = require('../config')
 
 router.post('/create', (req, res) => {
-  res.send()
+  console.log(req.body);
+  res.send('Successfully Created Post!!');
 });
 
 router.post('/admin', (req, res) => {

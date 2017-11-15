@@ -35,14 +35,15 @@ blockquote {
   color: #868e96;
 }
 
-.shift {
-  margin-left: 0%;
-}
-
 .section-heading {
   font-size: 36px;
   font-weight: 700;
   margin-top: 60px;
+}
+
+.contain-button {
+  margin-left: 6%;
+  margin-right: 6%;
 }
 
 .caption {
@@ -224,8 +225,12 @@ header.masthead .page-heading, header.masthead .post-heading, header.masthead .s
 }
 
 @media only screen and (min-width: 415px) {
-  .shift {
-    margin-left: 8%;
+  .contain {
+    margin-left: 13%;
+  }
+  .contain-button {
+    margin-left: 18%;
+    margin-right: 18%;
   }
 }
 

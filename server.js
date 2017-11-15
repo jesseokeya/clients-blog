@@ -3,15 +3,17 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const open = require('open');
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const { api } = require('./api');
+const {api} = require('./api');
 const render = require('./render');
-const {port, _db, routes} = require('./config');
+const {port, _db, routes, enableAutoRefresh} = require('./config');
+const {_sockets} = require('./socket')
 
 mongoose.connect(_db, {useMongoClient: true});
 mongoose.Promise = global.Promise;
@@ -35,8 +37,13 @@ app.use('/api/', api);
 app.use(express.static(__dirname + '/resources'));
 app.use(routes, express.static(path.join(__dirname + '/resources')));
 
+
 io.on('connection', (socket) => {
-  socket.emit('success', {message: 'Successfully Connected To Socket!!'});
-})
+  _sockets(socket, io);
+});
+
+(enableAutoRefresh)
+  ? open(`http://localhost:${port}`)
+  : 'Auto Refresh Disabled';
 
 http.listen(port, () => console.log(`server running on *port ${port}`));

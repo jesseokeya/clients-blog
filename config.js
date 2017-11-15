@@ -3,7 +3,7 @@ const config = {
     '/', '/blog', '/home'
   ],
   routes: [
-    '/post', '/admin'
+    '/admin/edit/', '/post', '/admin'
   ],
   port: process.env.PORT || 3000,
   _db: 'mongodb://jesse:clientsblog@ds147421.mlab.com:47421/clients-blog',
@@ -11,7 +11,8 @@ const config = {
     email: 'melissamacisaac3@gmail.com',
     password: 'ghme2017'
   },
-  private: true
+  private: true,
+  enableAutoRefresh: false
 }
 
 module.exports = config;

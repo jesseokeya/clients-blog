@@ -1,7 +1,9 @@
 const socket = io();
 
 $(document).ready(() => {
-  $('#alertMessage').hide();
+  (!isUserAdmin())
+    ? $('#adminEdit').remove()
+    : ''
   handleAdmin();
   socket.on('success', function(data) {
     console.log(data.message);
@@ -17,10 +19,12 @@ $(document).ready(() => {
           Cookies.set('isAdmin', 'true', {expires: 0.1});
           window.location.href = '/admin/publish'
         } else {
-          $('#alertMessage').show();
+          const heading = 'Try Again';
+          const body = 'Invalid Username Or Password'
+          $('#warning').append(showWarninMessage(heading, body))
           setTimeout(() => {
-            $('#alertMessage').hide();
-          }, 3000);
+            $('#warning').empty();
+          }, 2500);
         }
       });
     }
@@ -29,22 +33,22 @@ $(document).ready(() => {
 });
 
 /* Helper Functions */
-let authAdmin = () => {
-
+const authAdmin = () => {
   const email = $('input#adminEmail').val().replace(/ /g, '');
   const password = $('input#adminPassword').val().replace(/ /g, '');
   if (!validateEmail(email) || !password) {
-    $('#alertMessage').show();
+    const heading = 'Try Again';
+    const body = 'Invalid Username Or Password'
+    $('#warning').append(showWarninMessage(heading, body))
     setTimeout(() => {
-      $('#alertMessage').hide();
-    }, 3000);
+      $('#warning').empty();
+    }, 2500);
     return null
   }
-
   return {email, password};
 };
 
-let validateEmail = (mail) => {
+const validateEmail = (mail) => {
   const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (mail.match(mailformat)) {
     return true;
@@ -52,22 +56,39 @@ let validateEmail = (mail) => {
   return false;
 }
 
-let handleAdmin = () => {
-  const checkAdmin = window.location.pathname === '/admin';
-  const checkCookies = Cookies.get('isAdmin') === 'true';
+const handleAdmin = () => {
+  const checkAdmin = window.location.pathname === '/login';
+  const checkCookies = isUserAdmin();
   if (checkAdmin && checkCookies) {
     window.location.href = '/admin/publish'
   }
-  const checkAdminAgain = window.location.pathname === '/admin/publish';
+  const checkAdminAgain = window.location.pathname.includes('/admin');
   if (checkAdminAgain && !checkCookies) {
-    window.location.href = '/admin'
+    window.location.href = '/login'
   }
   (checkCookies)
-    ? $('#signOut').show()
-    : $('#signOut').hide();
+    ? $('li#signOut').append(signOutButton())
+    : '';
 }
 
-let handleSignOut = () => {
+const handleSignOut = () => {
   Cookies.remove('isAdmin');
   window.location.reload();
+}
+
+const isUserAdmin = () => {
+  return Cookies.get('isAdmin') === 'true';
+}
+
+const showWarninMessage = (heading, body) => {
+  return (`<div class="container">
+    <div class="alert alert-danger" role="alert">
+      <strong>${heading}</strong> ${body}
+    </div>
+  </div>`);
+}
+
+const signOutButton = () => {
+  return `<a onclick="handleSignOut()" class="nav-link btn btn-warning btn-sm">
+ sign out </a>`;
 }

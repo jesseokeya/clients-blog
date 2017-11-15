@@ -13,7 +13,7 @@ router.get('/about', (req, res) => {
   res.render('pages/about');
 });
 
-router.get('/admin', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('pages/login');
 });
 
@@ -29,6 +29,18 @@ router.get('/post/:index', (req, res) => {
   const index = req.params.index;
   const postAtIndex = getPostByIndex(getAllPosts[0], index);
   res.render('pages/post', postAtIndex);
+});
+
+router.get('/admin/create', (req, res) => {
+  res.render('pages/create/post');
+});
+
+router.get('/admin/edit/about', (req, res) => {
+  res.render('pages/edit/about');
+});
+
+router.get('/admin/edit/posts', (req, res) => {
+  res.render('pages/edit/post');
 });
 
 module.exports = router;
