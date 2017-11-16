@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
   title: String,
   author: String,
+  heading: String,
+  subheading: String,
   body: String,
   images: [
     {

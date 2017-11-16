@@ -2,13 +2,21 @@ const express = require('express');
 const router = express.Router();
 const {getAllPosts} = require('./helper');
 const mongoose = require('mongoose');
-const {credentials} = require('../config');
+const {credentials, firebase} = require('../config');
 
 /* Post Resquests */
 
 router.post('/create', (req, res) => {
-  console.log(req.body);
-  res.send('Successfully Created Post!!');
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
+  const newPost = new post(req.body);
+  newPost.save((err) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send({data: req.body, status: 200, message: 'new post successfully saved'});
+    }
+  });
 });
 
 router.post('/admin', (req, res) => {
@@ -34,7 +42,7 @@ router.post('/contact', (req, res) => {
   const newContact = new contact(req.body);
   newContact.save((err) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.send({data: req.body, status: 200, message: 'contact successfully saved'});
     }
@@ -61,7 +69,6 @@ router.post('/update/about', (req, res) => {
   });
 });
 
-
 /* Get Resquests */
 router.get('/get/about', (req, res) => {
   const aboutSchema = require('../models/about');
@@ -70,12 +77,12 @@ router.get('/get/about', (req, res) => {
     if (err) {
       throw err;
     }
-    res.send({
-      status: 200,
-      data: docs,
-      message: 'Blog About Me Data'
-    });
+    res.send({status: 200, data: docs, message: 'Blog About Me Data'});
   });
+});
+
+router.get('/getFirebaseConfig', (req, res) => {
+  res.send(firebase);
 });
 
 const api = router;

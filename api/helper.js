@@ -11,12 +11,6 @@ post.find({}, function(err, results) {
   allPosts.push(results);
 });
 
-let getPostByIndex = (allPosts, index) => {
-  return allPosts[index];
-}
-
 module.exports = {
-  getAllPosts: allPosts,
-  getPostByIndex: getPostByIndex
-
+  getAllPosts: allPosts
 }

@@ -4,10 +4,16 @@ const router = express.Router();
 const path = require('path');
 const {home} = require('../config');
 const {getAllPosts} = require('../api');
-const {getPostByIndex} = require('../api/helper');
 
 router.get(home, (req, res) => {
-  res.render('pages/home', getAllPosts[0]);
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
+  post.find({}, function(err, results) {
+    if (err) {
+      throw err;
+    }
+    res.render('pages/home', {result: results});
+  });
 });
 
 router.get('/about', (req, res) => {
@@ -35,12 +41,18 @@ router.get('/contact', (req, res) => {
 });
 
 router.get('/post/:index', (req, res) => {
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
   const index = req.params.index;
-  const postAtIndex = getPostByIndex(getAllPosts[0], index);
-  res.render('pages/post', postAtIndex);
+  post.find({}, function(err, results) {
+    if (err) {
+      throw err;
+    }
+    res.render('pages/post', {result: results[index - 1]});
+  });
 });
 
-router.get('/admin/create', (req, res) => {
+router.get('/admin/create-post', (req, res) => {
   res.render('pages/create/post');
 });
 

@@ -6,7 +6,7 @@ $(document).ready(() => {
     : ''
   handleAdmin();
   preload();
-  socket.on('success', function(data) {
+  socket.on('success', (data) => {
     console.log(data.message);
   });
 
@@ -15,14 +15,14 @@ $(document).ready(() => {
       $.post('/api/admin', {
         email: authAdmin().email,
         password: authAdmin().password
-      }).done(function(data) {
+      }).done((data) => {
         if (data.isValidUser) {
           Cookies.set('isAdmin', 'true', {expires: 0.1});
           window.location.href = '/admin/publish'
         } else {
           const heading = 'Try Again';
           const body = 'Invalid Username Or Password'
-          $('#warning').append(showWarninMessage(heading, body))
+          $('#warning').append(dangerMessage(heading, body))
           setTimeout(() => {
             $('#warning').empty();
           }, 2500);
@@ -40,7 +40,7 @@ const authAdmin = () => {
   if (!validateEmail(email) || !password) {
     const heading = 'Try Again';
     const body = 'Invalid Username Or Password'
-    $('#warning').append(showWarninMessage(heading, body))
+    $('#warning').append(dangerMessage(heading, body))
     setTimeout(() => {
       $('#warning').empty();
     }, 2500);
@@ -57,9 +57,7 @@ const validateEmail = (mail) => {
   return false;
 }
 
-const preload = () => {
-  
-}
+const preload = () => {}
 
 const handleAdmin = () => {
   const checkAdmin = window.location.pathname === '/login';
@@ -89,8 +87,8 @@ const isUserAdmin = () => {
   return Cookies.get('isAdmin') === 'true';
 }
 
-const showWarninMessage = (heading, body) => {
-  return (`<div class="container">
+const dangerMessage = (heading, body) => {
+  return (`<div id="dangerMessage" class="container">
     <div class="alert alert-danger" role="alert">
       <strong>${heading}</strong> ${body}
     </div>
