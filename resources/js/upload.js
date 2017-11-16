@@ -61,7 +61,11 @@ const handleSubmit = () => {
       $('#alertMessage').append(message);
       setTimeout(() => {
         $('#successMessage').remove();
-        //window.location.reload();
+        $('#postTitle').val('');
+        $('#postAuthor').val('');
+        $('#postHeading').val('');
+        $('#postSubHeading').val('');
+        $('#postContent').val('');
       }, 4000);
       imagesUploaded = [];
     });
