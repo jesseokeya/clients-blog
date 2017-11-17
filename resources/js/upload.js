@@ -66,7 +66,9 @@ const handleSubmit = () => {
         $('#postHeading').val('');
         $('#postSubHeading').val('');
         $('#postContent').val('');
-      }, 4000);
+        $('#uploadProgress').css('width', '0%');
+        $("#fileHelp").val('');
+      }, 1000);
       imagesUploaded = [];
     });
   } else {

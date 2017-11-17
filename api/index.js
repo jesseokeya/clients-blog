@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {getAllPosts} = require('./helper');
 const mongoose = require('mongoose');
 const {credentials, firebase} = require('../config');
 
@@ -52,8 +51,7 @@ router.post('/contact', (req, res) => {
 router.post('/update/about', (req, res) => {
   const aboutSchema = require('../models/about');
   const about = mongoose.model('about');
-  console.log(req.body);
-  about.remove({}, (err, docs) => {
+  about.remove({}, (err) => {
     if (err) {
       throw err;
     }
@@ -85,8 +83,22 @@ router.get('/getFirebaseConfig', (req, res) => {
   res.send(firebase);
 });
 
+router.get('/getAllPosts', (req, res) => {
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
+  post.find({}, function(err, results) {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      status: 200,
+      data: results,
+      message: 'All Blog Posts Ever Created'
+    });
+  });
+});
+
 const api = router;
 module.exports = {
-  api,
-  getAllPosts
+  api
 };

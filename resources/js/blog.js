@@ -8,10 +8,7 @@ const saveChangesAbout = () => {
   };
   $.post('/api/update/about', postData).done((data) => {
     $('#adminMessage').append(showWarningMessage('Success!!', 'About Me Page Has Been Updated'));
-    const numberOfFields = 3;
-    for (let i = 0; i < numberOfFields; i++) {
-      const description = $(`#description${i}`).val('');
-    }
+    $(`#about`).val('');
     setTimeout(() => {
       $('#successMessage').remove();
     }, 3000);
@@ -19,13 +16,7 @@ const saveChangesAbout = () => {
 }
 
 const returnNewAbout = () => {
-  let newAboutMe = [];
-  const numberOfFields = 3;
-  for (let i = 0; i < numberOfFields; i++) {
-    const description = $(`#description${i}`).val();
-    newAboutMe.push({content: description})
-  }
-  return newAboutMe;
+  return $('#about').val();
 }
 
 const showWarningMessage = (heading, body) => {

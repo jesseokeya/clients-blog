@@ -1,16 +1,35 @@
-const mongoose = require('mongoose');
-const postSchema = require('../models');
-const post = mongoose.model('post');
-
-let allPosts = [];
-
-post.find({}, function(err, results) {
-  if (err) {
-    throw err;
+let evaluateBlogContent = (data) => {
+  const contents = data.body;
+  const splitContents = contents.split('\n');
+  for (let i in splitContents) {
+    if (splitContents[i].length === 0) {
+      splitContents.splice(i, 1);
+    }
   }
-  allPosts.push(results);
-});
+  const requiredData = {
+    title: data.title,
+    heading: data.heading,
+    subheading: data.subheading,
+    body: splitContents,
+    date: data.date,
+    comments: data.comments,
+    images: data.images,
+    meta: data.meta
+  }
+  return requiredData;
+}
+
+let splitAboutMe = (aboutMe) => {
+  const splitContents = aboutMe[0].description.split('\n');
+  for (let i in splitContents) {
+    if (splitContents[i].length === 0) {
+      splitContents.splice(i, 1);
+    }
+  }
+  return splitContents;
+}
 
 module.exports = {
-  getAllPosts: allPosts
+  evaluateBlogContent: evaluateBlogContent,
+  splitAboutMe: splitAboutMe
 }

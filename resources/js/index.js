@@ -1,15 +1,8 @@
-const socket = io();
-
 $(document).ready(() => {
   (!isUserAdmin())
     ? $('#adminEdit').remove()
     : ''
   handleAdmin();
-  preload();
-  socket.on('success', (data) => {
-    console.log(data.message);
-  });
-
   $('#adminButton').click(() => {
     if (authAdmin() != null) {
       $.post('/api/admin', {
@@ -30,7 +23,6 @@ $(document).ready(() => {
       });
     }
   });
-
 });
 
 /* Helper Functions */
@@ -56,8 +48,6 @@ const validateEmail = (mail) => {
   }
   return false;
 }
-
-const preload = () => {}
 
 const handleAdmin = () => {
   const checkAdmin = window.location.pathname === '/login';

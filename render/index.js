@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const path = require('path');
 const {home} = require('../config');
-const {getAllPosts} = require('../api');
+const {evaluateBlogContent, splitAboutMe} = require('../api/helper');
 
 router.get(home, (req, res) => {
   const postSchema = require('../models');
@@ -23,8 +23,8 @@ router.get('/about', (req, res) => {
     if (err) {
       throw err;
     }
-    console.log(results);
-    res.render('pages/about', {result: results});
+    const aboutMe = splitAboutMe(results);
+    res.render('pages/about', {result: aboutMe});
   });
 });
 
@@ -48,7 +48,8 @@ router.get('/post/:index', (req, res) => {
     if (err) {
       throw err;
     }
-    res.render('pages/post', {result: results[index - 1]});
+    const content = evaluateBlogContent(results[index - 1]);
+    res.render('pages/post', {result: content});
   });
 });
 
