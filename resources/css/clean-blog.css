@@ -35,6 +35,22 @@ blockquote {
   color: #868e96;
 }
 
+.card {
+  margin-bottom: 16px;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.contain-card {
+  margin-left: 10px;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .section-heading {
   font-size: 36px;
   font-weight: 700;

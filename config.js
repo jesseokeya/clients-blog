@@ -3,7 +3,7 @@ const config = {
     '/', '/blog', '/home'
   ],
   routes: [
-    '/admin/edit/', '/post', '/admin'
+    '/admin/edit/post/', '/admin/edit/', '/post', '/admin'
   ],
   port: process.env.PORT || 3000,
   _db: 'mongodb://jesse:clientsblog@ds147421.mlab.com:47421/clients-blog',
