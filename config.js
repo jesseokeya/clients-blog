@@ -12,7 +12,7 @@ const config = {
     password: 'ghme2017'
   },
   private: true,
-  enableAutoRefresh: false,
+  enableAutoRefresh: !false,
   firebase: {
     apiKey: "AIzaSyAsHUjyfOzAKLUxVJK19fdKw9r_Df-y8cE",
     authDomain: "melissas-blog.firebaseapp.com",

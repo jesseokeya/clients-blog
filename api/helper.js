@@ -1,22 +1,24 @@
 let evaluateBlogContent = (data) => {
   const contents = data.body;
-  const splitContents = contents.split('\n');
-  for (let i in splitContents) {
-    if (splitContents[i].length === 0) {
-      splitContents.splice(i, 1);
+  if (contents) {
+    const splitContents = contents.split('\n');
+    for (let i in splitContents) {
+      if (splitContents[i].length === 0) {
+        splitContents.splice(i, 1);
+      }
     }
+    const requiredData = {
+      title: data.title,
+      heading: data.heading,
+      subheading: data.subheading,
+      body: splitContents,
+      date: data.date,
+      comments: data.comments,
+      images: data.images,
+      meta: data.meta
+    }
+    return requiredData;
   }
-  const requiredData = {
-    title: data.title,
-    heading: data.heading,
-    subheading: data.subheading,
-    body: splitContents,
-    date: data.date,
-    comments: data.comments,
-    images: data.images,
-    meta: data.meta
-  }
-  return requiredData;
 }
 
 let splitAboutMe = (aboutMe) => {
