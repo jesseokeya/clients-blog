@@ -1,14 +1,18 @@
 /* A Bunch Of Get ANd Post Requests To Modify / Change Blog */
 /* Contents in realtime using websockets */
+const trackPostId = [];
 $(document).ready(() => {
-  const check = window.location.pathname.includes('/admin/edit/posts');
+  const check = windowLocation.includes('/admin/edit/posts');
+  const lastChar = windowLocation.charAt(windowLocation.length - 1);
   if (check) {
     $.get('/api/getAllPosts', (result) => {
       for (let i = result.data.length - 1; i >= 0; i--) {
         $('#allPosts').append(postCard(result.data[i], i));
       }
     });
-  }
+  };
+  populateAboutMe(lastChar);
+  editCurrentPost(lastChar);
 });
 
 const saveChangesAbout = () => {
@@ -63,5 +67,58 @@ const formatDate = (date) => {
 }
 
 const redirectTo = (urlIndex) => {
-  window.location.href = `/admin/edit/post/${urlIndex+1}`;
+  window.location.href = `/admin/edit/post/${urlIndex + 1}`;
+}
+
+const populateAboutMe = () => {
+  const check = (windowLocation === '/admin/edit/about');
+  $.get('/api/get/about', (result) => {
+    const aboutMeText = result.data[0].description;
+    $('#about').val(aboutMeText);
+  });
+}
+
+const editCurrentPost = (postNumber) => {
+  const lastChar = postNumber;
+  const check = isNumeric(lastChar);
+  if (windowLocation.includes('/admin/edit/post/') && check) {
+    $.get(`/api/get/post/${lastChar}`, (result) => {
+      const data = result.data;
+      $('#postEditTitle').val(data.title);
+      $('#postEditAuthor').val(data.author);
+      $('#postEditHeading').val(data.heading);
+      $('#postEditSubHeading').val(data.subheading);
+      $('#postEditContent').val(data.body);
+      trackPostId.push(data._id);
+    });
+  }
+}
+
+let handleUpdate = (postNumber) => {
+  const updatedPost = {
+    id: trackPostId[0],
+    title: $('#postEditTitle').val(),
+    author: $('#postEditAuthor').val(),
+    heading: $('#postEditHeading').val(),
+    subheading: $('#postEditSubHeading').val(),
+    body: $('#postEditContent').val()
+  }
+  $.post(`/api/update/post/${postNumber}`, updatedPost, (result) => {
+    if (result.isUpdated) {
+      $('#alertMessage').append(showWarningMessage('Sucess!', 'Post Was Updated'));
+      setTimeout(() => {
+        const data = result.newPost;
+        $('#alertMessage').empty();
+        $('#postEditTitle').val(data.title);
+        $('#postEditAuthor').val(data.author);
+        $('#postEditHeading').val(data.heading);
+        $('#postEditSubHeading').val(data.subheading);
+        $('#postEditContent').val(data.body);
+      }, 3000);
+    }
+  });
+}
+
+const isNumeric = (num) => {
+  return !isNaN(num);
 }

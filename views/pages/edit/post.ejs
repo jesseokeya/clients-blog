@@ -12,4 +12,36 @@
       </div>
     </div>
   </header>
+  <div class="container">
+    <div class="contain-button">
+      <br />
+      <div id="alertMessage"></div>
+      <br />
+      <div class="form-group">
+        <input type="text" class="form-control" id="postEditTitle" aria-describedby="title" placeholder="Title" />
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="postEditAuthor" aria-describedby="author" placeholder="Author" />
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="postEditHeading" aria-describedby="heading" placeholder="Heading" />
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="postEditSubHeading" aria-describedby="subheading" placeholder="Subheading" />
+      </div>
+
+      <div class="form-group">
+        <textarea placeholder="Contents" class="form-control" id="postEditContent" rows="18"></textarea>
+      </div>
+      <br />
+      <button onclick="handleUpdate()" type="button" class="btn btn-primary btn-block">
+      Update Post
+    </button>
+      <br />
+      <br />
+    </div>
+  </div>
 </div>

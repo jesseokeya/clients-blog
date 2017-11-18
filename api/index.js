@@ -67,7 +67,31 @@ router.post('/update/about', (req, res) => {
   });
 });
 
+router.post('/update/post/:index', (req, res) => {
+  const postSchema = require('../models');
+  const allPosts = mongoose.model('post');
+
+  allPosts.findById(req.body.id, function(err, post) {
+    if (err) {
+      return handleError(err);
+    }
+    post.title = req.body.title,
+    post.heading = req.body.heading,
+    post.author = req.body.author,
+    post.subheading = req.body.subheading,
+    post.body = req.body.body
+
+    post.save(function(err, updatedPost) {
+      if (err) {
+        return handleError(err);
+      }
+      res.send({newPost: updatedPost, isUpdated: true, message: 'Post Was Successfully Updated', status: 200});
+    });
+  });
+});
+
 /* Get Resquests */
+
 router.get('/get/about', (req, res) => {
   const aboutSchema = require('../models/about');
   const about = mongoose.model('about');
@@ -90,10 +114,22 @@ router.get('/getAllPosts', (req, res) => {
     if (err) {
       throw err;
     }
+    res.send({status: 200, data: results, message: 'All Blog Posts Ever Created'});
+  });
+});
+
+router.get('/get/post/:index', (req, res) => {
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
+  const indexOfPost = req.params.index;
+  post.find({}, function(err, results) {
+    if (err) {
+      throw err;
+    }
     res.send({
       status: 200,
-      data: results,
-      message: 'All Blog Posts Ever Created'
+      data: results[indexOfPost - 1],
+      message: `successfully Fetched Post Number ${indexOfPost}`
     });
   });
 });

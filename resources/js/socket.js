@@ -5,8 +5,8 @@ $(document).ready(() => {
 });
 
 let handleSockets = () => {
-  const check = window.location.pathname.includes('post');
-  const containsAdmin = window.location.pathname.includes('admin');
+  const check = windowLocation.includes('post');
+  const containsAdmin = windowLocation.includes('admin');
   if (check && (containsAdmin === false)) {
     socket.on('success', (data) => {
       console.log(data.message);

@@ -1,3 +1,4 @@
+const windowLocation = window.location.pathname;
 $(document).ready(() => {
   (!isUserAdmin())
     ? $('#adminEdit').remove()
@@ -50,22 +51,31 @@ const validateEmail = (mail) => {
 }
 
 const handleAdmin = () => {
-  const checkAdmin = window.location.pathname === '/login';
+  const checkAdmin = windowLocation === '/login';
   const checkCookies = isUserAdmin();
   if (checkAdmin && checkCookies) {
     window.location.href = '/admin/publish'
   }
-  const checkAdminAgain = window.location.pathname.includes('/admin');
+  const checkAdminAgain = windowLocation.includes('/admin');
   if (checkAdminAgain && !checkCookies) {
     window.location.href = '/login'
   }
   (checkCookies)
     ? $('#signOut').append(signOutButton())
     : '';
+  if (windowLocation === '/about') {
+    (checkCookies)
+      ? $('#editButton').append(editButton('/admin/edit/about'))
+      : '';
+  }
+  const checkLength = (windowLocation.length === 7);
+  if (windowLocation.includes('/post/') && checkLength) {
+    const indexOfPost = windowLocation.charAt(windowLocation.length - 1);
+    (checkCookies)
+      ? $('#editButton').append(editButton(`/admin/edit/post/${indexOfPost}`))
+      : '';
+  }
 
-  (checkCookies)
-    ? $('#editButton').append(editButton)
-    : '';
 }
 
 const handleSignOut = () => {
@@ -90,6 +100,7 @@ const signOutButton = () => {
  sign out </a>`;
 }
 
-const editButton = () => {
-  return `<button id="adminEdit" type="button" class="btn btn-warning text-white">Edit</button>`
+const editButton = (hrefLink) => {
+  return `<a id="adminEdit" class="btn btn-warning text-white" href=${hrefLink} role="button">
+  Edit</a>`
 }

@@ -2,7 +2,7 @@
 let imagesUploaded = [];
 
 $(document).ready(() => {
-  const check = (window.location.pathname.includes('post'));
+  const check = (windowLocation.includes('post'));
   if (check) {
     $.get('/api/getFirebaseConfig', (data, err) => {
       return data;
