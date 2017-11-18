@@ -11,7 +11,7 @@ $(document).ready(() => {
       }
     });
   };
-  populateAboutMe(lastChar);
+  populateAboutMe();
   editCurrentPost(lastChar);
 });
 
@@ -82,6 +82,7 @@ const editCurrentPost = (postNumber) => {
   const lastChar = postNumber;
   const check = isNumeric(lastChar);
   if (windowLocation.includes('/admin/edit/post/') && check) {
+    $('#deletButton').append(deleteButton());
     $.get(`/api/get/post/${lastChar}`, (result) => {
       const data = result.data;
       $('#postEditTitle').val(data.title);
@@ -94,7 +95,8 @@ const editCurrentPost = (postNumber) => {
   }
 }
 
-let handleUpdate = (postNumber) => {
+let handleUpdate = () => {
+  const lastChar = windowLocation.charAt(windowLocation.length - 1);
   const updatedPost = {
     id: trackPostId[0],
     title: $('#postEditTitle').val(),
@@ -103,18 +105,31 @@ let handleUpdate = (postNumber) => {
     subheading: $('#postEditSubHeading').val(),
     body: $('#postEditContent').val()
   }
-  $.post(`/api/update/post/${postNumber}`, updatedPost, (result) => {
+  $.post(`/api/update/post/${lastChar}`, updatedPost, (result) => {
     if (result.isUpdated) {
       $('#alertMessage').append(showWarningMessage('Sucess!', 'Post Was Updated'));
       setTimeout(() => {
         const data = result.newPost;
         $('#alertMessage').empty();
         $('#postEditTitle').val(data.title);
+        $('#titleMain').html(data.title);
         $('#postEditAuthor').val(data.author);
         $('#postEditHeading').val(data.heading);
         $('#postEditSubHeading').val(data.subheading);
         $('#postEditContent').val(data.body);
-      }, 3000);
+      }, 2000);
+    }
+  });
+}
+
+const deletePost = () => {
+  const lastChar = windowLocation.charAt(windowLocation.length - 1);
+  const postId = {
+    id: trackPostId[0]
+  }
+  $.post(`/api/delete/post/${lastChar}`, postId, (result) => {
+    if(result.isDeleted){
+      window.location.href = '/';
     }
   });
 }

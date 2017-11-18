@@ -5,8 +5,10 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1><%=result.title %></h1>
-            <span class="subheading">Edit Post</span>
+            <h1 id="titleMain"> <%=result.title %> </h1>
+            <span class="subheading"></span>
+            <br />
+            <div id="deletButton" class="text-center text-white"></div>
           </div>
         </div>
       </div>
@@ -42,6 +44,28 @@
     </button>
       <br />
       <br />
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <br />
+          <b> Are You Sure You Want To Delete This Blog Post? </b>
+          <br /><br />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button onclick="deletePost()" type="button" class="btn btn-warning">Yes</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -28,10 +28,12 @@
 
         <%for(let i = 0; i < result.body.length; i++){%>
           <%if(result.body[i] === '[insert image]'){%>
+            <%if(result.images[1]){%>
             <a href="#">
                 <img class="img-fluid" src="<%=result.images[1].url%>" alt="postImage">
             </a>
             <span class="caption text-muted">
+               <%}%>
               <%=result.heading%>
             </span>
           <%}%>

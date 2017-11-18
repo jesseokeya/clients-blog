@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const {credentials, firebase} = require('../config');
 
-/* Post Resquests */
+/* Post Requests */
 
 router.post('/create', (req, res) => {
   const postSchema = require('../models');
@@ -90,8 +90,21 @@ router.post('/update/post/:index', (req, res) => {
   });
 });
 
-/* Get Resquests */
+router.post('/delete/post/:index', (req, res) => {
+  const postSchema = require('../models');
+  const allPosts = mongoose.model('post');
 
+  allPosts.remove({
+    _id: req.body.id
+  }, function(err) {
+    if (err) {
+      return handleError(err);
+    }
+    res.send({isDeleted: true, message: 'Post Was Successfully Deleted', status: 200});
+  });
+});
+
+/* Get Requests */
 router.get('/get/about', (req, res) => {
   const aboutSchema = require('../models/about');
   const about = mongoose.model('about');

@@ -104,3 +104,7 @@ const editButton = (hrefLink) => {
   return `<a id="adminEdit" class="btn btn-warning text-white" href=${hrefLink} role="button">
   Edit</a>`
 }
+
+const deleteButton = () => {
+  return `<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-danger">Delete Post</button>`
+}
