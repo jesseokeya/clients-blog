@@ -107,4 +107,4 @@ const editButton = (hrefLink) => {
 
 const deleteButton = () => {
   return `<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-danger">Delete Post</button>`
-}
+};

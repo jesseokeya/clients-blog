@@ -104,6 +104,28 @@ router.post('/delete/post/:index', (req, res) => {
   });
 });
 
+router.post('/comment', (req, res) => {
+  const filterReqBody = {
+    username: req.body.username,
+    date: req.body.date,
+    body: req.body.body
+  }
+  const postSchema = require('../models');
+  const post = mongoose.model('post');
+  post.update({
+    _id: req.body.id
+  }, {
+    $push: {
+      comments: filterReqBody
+    }
+  }, function(err, result) {
+    if (err) {
+      throw err
+    }
+    res.send({status: 200, data: result, message: 'Comment Successfully Created'});
+  });
+});
+
 /* Get Requests */
 router.get('/get/about', (req, res) => {
   const aboutSchema = require('../models/about');

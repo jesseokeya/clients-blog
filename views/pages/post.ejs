@@ -34,11 +34,13 @@
             <span class="caption text-muted">
               <%=result.heading%>
             </span>
-          <%}%>
-          <%if(result.body[i] !== '[insert image]'){%>
-              <p> <%= result.body[i] %> </p>
-          <%}%>
-        <%}%>
+            <%}%>
+              <%if(result.body[i] !== '[insert image]'){%>
+                <p>
+                  <%= result.body[i] %>
+                </p>
+                <%}%>
+                  <%}%>
 
                     <!-- <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote> -->
 
@@ -48,3 +50,33 @@
     </div>
   </div>
 </article>
+<br />
+<div class="contain-button">
+  <div style="max-height: 140vh; overflow: scroll;"class="card">
+    <div class="container">
+      <br />
+      <div class="card-header bg-info text-white">
+        <b> Comment Section </b>
+      </div>
+
+      <br />
+      <div class="card-block">
+        <h4 class="card-title">Comment</h4>
+        <div class="form-group">
+          <input type="text" class="form-control" id="commentUsername" aria-describedby="emailHelp" placeholder="username" />
+          <br />
+          <div class="form-group">
+            <textarea placeholder="Write Comment" class="form-control" id="commentBox" rows="7"></textarea>
+          </div>
+        </div>
+      </div>
+      <button onclick="postComment()" type="button" class="btn btn-primary btn-block">Submit</button>
+      <br />
+      <br />
+      <div id="allComments">
+
+      </div>
+    </div>
+    <br/>
+  </div>
+</div>

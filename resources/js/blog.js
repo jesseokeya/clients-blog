@@ -144,4 +144,43 @@ const deletePost = () => {
 
 const isNumeric = (num) => {
   return !isNaN(num);
+};
+
+const comment = (username, body) => {
+  let newUsername = '';
+  if (username.includes(' ')) {
+    const splitUsername = username.split(' ');
+    newUsername = splitUsername[0].charAt(0) + splitUsername[1].charAt(0);
+  } else {
+    newUsername = username.charAt(0) + username.charAt(1);
+  }
+
+  const colors = [
+    "#1abc9c",
+    "#2ecc71",
+    "#3498db",
+    "#9b59b6",
+    "#34495e",
+    "#16a085",
+    "#27ae60",
+    "#2980b9",
+    "#8e44ad",
+    "#2c3e50",
+    "#f1c40f",
+    "#e67e22",
+    "#e74c3c",
+    "#ecf0f1",
+    "#95a5a6",
+    "#f39c12",
+    "#d35400",
+    "#c0392b",
+    "#bdc3c7",
+    "#7f8c8d"
+  ]
+  const random_color = colors[Math.floor(Math.random() * colors.length)];
+  return (`<div style="background-color: ${random_color}" class="avatar-circle align-comment">
+            <span class="initials">${newUsername}</span>
+          </div>
+          <p class="lead text-muted align-comment space-left">${body}</p>
+          <hr/>`);
 }

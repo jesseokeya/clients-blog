@@ -14,6 +14,7 @@ const postSchema = new mongoose.Schema({
   ],
   comments: [
     {
+      username: String,
       body: String,
       date: Date
     }
