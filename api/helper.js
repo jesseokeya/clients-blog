@@ -13,6 +13,7 @@ let evaluateBlogContent = (data) => {
       subheading: data.subheading,
       body: splitContents,
       date: data.date,
+      author: data.author,
       comments: data.comments,
       images: data.images,
       meta: data.meta

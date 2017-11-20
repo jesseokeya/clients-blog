@@ -11,7 +11,11 @@ $(document).ready(() => {
       }
     });
   };
-  populateAboutMe();
+
+  (windowLocation.includes('/about'))
+    ? populateAboutMe()
+    : '';
+
   editCurrentPost(lastChar);
 });
 
@@ -90,6 +94,10 @@ const editCurrentPost = (postNumber) => {
       $('#postEditHeading').val(data.heading);
       $('#postEditSubHeading').val(data.subheading);
       $('#postEditContent').val(data.body);
+      for (let i in data.images) {
+        const id = $('#displayUploadedImages');
+        id.append(displayImageCard(data.images[i], 'Click To Change Image'));
+      }
       trackPostId.push(data._id);
     });
   }
@@ -128,7 +136,7 @@ const deletePost = () => {
     id: trackPostId[0]
   }
   $.post(`/api/delete/post/${lastChar}`, postId, (result) => {
-    if(result.isDeleted){
+    if (result.isDeleted) {
       window.location.href = '/';
     }
   });

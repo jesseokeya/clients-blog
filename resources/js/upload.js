@@ -3,7 +3,8 @@ let imagesUploaded = [];
 
 $(document).ready(() => {
   const check = (windowLocation.includes('post'));
-  if (check) {
+  const correctUrl = (windowLocation === '/admin/create-post');
+  if (check && correctUrl) {
     $.get('/api/getFirebaseConfig', (data, err) => {
       return data;
     }).then((config) => {
@@ -84,8 +85,26 @@ const getImageUrls = (metadatas) => {
       url: metadatas[i].metadata.downloadURLs[0]
     }
     imagesUploaded.push(imageInfo);
+    const displayUploaded = $('#displayUploadedImages');
+    displayUploaded.append(displayImageCard(imageInfo, ''));
     (i == (metadatas.length - 1))
       ? $('#uploadProgress').css('width', '100%')
       : '';
   }
+}
+
+const displayImageCard = (image, text) => {
+  console.log(image);
+  return (`<div class="col-sm-8 col-md-4 col-lg-3 ">
+            <div onclick="changeImage(${image.alt})" class="card">
+              <img class="card-img img-fluid" src=${image.url} alt="uploaded images">
+              <div class="card-img-overlay">
+              <h5 class="card-title text-white">${text}</h5>
+              </div>
+            </div>
+          </div>`);
+}
+
+const changeImage = (image) =>{
+  console.log(image);
 }
