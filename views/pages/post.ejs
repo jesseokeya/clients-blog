@@ -1,5 +1,5 @@
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('https://source.unsplash.com/1600x900/?climate')">
+<header class="masthead" style="background-image: url('<%= result.images[0].url %>')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
@@ -25,34 +25,49 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-
         <%for(let i = 0; i < result.body.length; i++){%>
-          <%if(result.body[i] === '[insert image]'){%>
-            <a href="#">
-                <img class="img-fluid" src="<%=result.images[1].url%>" alt="postImage">
-            </a>
-            <span class="caption text-muted">
-              <%=result.heading%>
-            </span>
-            <%}%>
-              <%if(result.body[i] !== '[insert image]'){%>
-                <p>
-                  <%= result.body[i] %>
-                </p>
+          <%if(result.body[i].includes('insert image')){%>
+            <% const imageIndex = result.body[i].replace(/[^\d.]/g, '') %>
+              <%if(imageIndex < result.images.length){%>
+                <div class="text-center">
+                  <a href="#">
+                  <img class="img-fluid rounded" src="<%=result.images[imageIndex - 1].url%>" alt="postImage" height="460px" width="500px">
+                </a>
+                  <span class="caption text-muted">
+                  <%=result.heading%>
+                </span>
+                </div>
                 <%}%>
                   <%}%>
-
-                    <!-- <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote> -->
-
-                    <!-- <h2 class="section-heading">Reaching for the Stars</h2> -->
-
+                    <%if(result.body[i].includes('{') || result.body[i].includes('}')){%>
+                      <h3 class="section-heading h4">
+                <% result.body[i] = result.body[i].replace('{', '') %>
+                <% result.body[i] = result.body[i].replace('}', '') %>
+                <%= result.body[i] %>
+                <% result.body.splice(i, 1) %>
+              </h3>
+                      <%}%>
+                        <%if(result.body[i].includes('<')){%>
+                          <blockquote class="blockquote">
+                            <% result.body[i] = result.body[i].replace('<', '') %>
+                              <% result.body[i] = result.body[i].replace('>', '') %>
+                                <%= result.body[i] %>
+                                  <% result.body.splice(i, 1) %>
+                          </blockquote>
+                          <%}%>
+                            <%if(!result.body[i].includes('insert image')){%>
+                              <p>
+                                <%= result.body[i] %>
+                              </p>
+                              <%}%>
+                                <%}%>
       </div>
     </div>
   </div>
 </article>
 <br />
 <div class="contain-button">
-  <div style="max-height: 140vh; overflow: scroll;"class="card">
+  <div style="max-height: 140vh; overflow: scroll;" class="card">
     <div class="container">
       <br />
       <div class="card-header bg-info text-white">
@@ -70,7 +85,7 @@
           </div>
         </div>
       </div>
-      <button onclick="postComment()" type="button" class="btn btn-primary btn-block">Submit</button>
+      <button id="submitComment" onclick="postComment()" type="button" class="btn btn-primary btn-block">Submit</button>
       <br />
       <br />
       <div id="allComments">

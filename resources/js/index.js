@@ -95,6 +95,20 @@ const dangerMessage = (heading, body) => {
   </div>`);
 }
 
+const viewPost = () => {
+  const postNum = windowLocation.replace(/[^\d.]/g, '');
+  const hostUrl = window.location.host;
+  return `<button onclick="redirectToPost('${hostUrl}/post/${postNum}')" class="btn btn-primary text-white" role="button">
+            View Post
+          </button>`
+};
+
+const redirectToPost = (url) => {
+  (!windowLocation.includes('localhost'))
+    ? window.location.href = 'http://' + url
+    : window.location.href = 'https://' + url;
+}
+
 const signOutButton = () => {
   return `<a onclick="handleSignOut()" class="nav-link btn btn-warning btn-sm">
  sign out </a>`;

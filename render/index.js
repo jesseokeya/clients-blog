@@ -49,6 +49,7 @@ router.get('/post/:index', (req, res) => {
       throw err;
     }
     const content = evaluateBlogContent(results[index - 1]);
+    console.log(content.images);
     res.render('pages/post', {result: content});
   });
 });
