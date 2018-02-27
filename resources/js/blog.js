@@ -89,6 +89,7 @@ const editCurrentPost = (postNumber) => {
     $('#deletButton').append(deleteButton());
     $.get(`/api/get/post/${lastChar}`, (result) => {
       const data = result.data;
+      $('#hiddenUpload').hide();
       $('#viewPost').append(viewPost());
       $('#postEditTitle').val(data.title);
       $('#postEditAuthor').val(data.author);

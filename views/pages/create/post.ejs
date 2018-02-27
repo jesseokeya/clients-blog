@@ -35,7 +35,7 @@
       </div>
 
       <div class="form-group">
-        <textarea placeholder="Post contents. Use ' [insert image] ' to add images. Images should be alone on a paragraph" class="form-control" id="postContent" rows="18"></textarea>
+        <textarea placeholder="Post contents. Use '[insert image `imageNumber`]' to add images. Images should be alone on a paragraph. example -> [insert image 1]." class="form-control" id="postContent" rows="18"></textarea>
       </div>
       <br />
       <div class="row" id="displayUploadedImages"></div>
@@ -46,7 +46,7 @@
         </div>
         <br />
         <input type="file" class="form-control-file" id="imageUpload" aria-describedby="fileHelp" multiple />
-        <small id="fileHelp" class="form-text text-dark">Upload Images For Your Blog Post Maximum Of 2</small>
+        <small id="fileHelp" class="form-text text-dark">Upload As Many Images As You Like</small>
       </div>
       <br />
       <button onclick="handleSubmit()" type="button" class="btn btn-primary btn-block">
